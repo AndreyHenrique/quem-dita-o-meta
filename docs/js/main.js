@@ -358,6 +358,9 @@ function renderVerdicts() {
 }
 
 // ------------------------------------------------------------------ inicialização
+// Link compartilhável: ?campeao=Rumble pré-seleciona um campeão.
+const qp = new URLSearchParams(location.search).get("campeao");
+if (qp && meta.champByName.has(qp)) { state.champ = meta.champByName.get(qp); $("champ-search").value = qp; }
 updateAll();
 renderAdoption();
 renderPlayers(true);

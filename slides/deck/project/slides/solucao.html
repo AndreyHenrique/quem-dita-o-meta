@@ -1,0 +1,15 @@
+<section id="solucao" class="content alt">
+<h2>A solução: cinco tipos de gráfico, coordenados</h2>
+<table class="tbl">
+<tr><th style="width:22%">Gráfico</th><th style="width:16%">Perspectiva</th><th>Por que este, e não outro</th></tr>
+<tr><td>Rede de sinergia (grafo de força)</td><td>Meta</td><td>Duplas no mesmo time são um dado de rede; uma matriz de 167 × 167 campeões fica ilegível.</td></tr>
+<tr><td>Coordenadas paralelas com brush</td><td>Jogadores</td><td>O radar codifica por área e ângulo, depende da ordem dos eixos e não compara dezenas de jogadores.</td></tr>
+<tr><td>Dispersão pick × vitória</td><td>Meta</td><td>Duas taxas codificadas por posição em escala comum, o canal mais preciso.</td></tr>
+<tr><td>Barras de presença e de duplas</td><td>Meta · Partida</td><td>Comparar magnitudes ordenadas, com intervalo de confiança quando há incerteza.</td></tr>
+<tr><td>Linhas por patch e vitória × ouro</td><td>Meta · Partida</td><td>Mudança ao longo dos patches e curva de probabilidade de vitória.</td></tr>
+</table>
+<div class="callout" style="margin-top:32px"><p class="callout-t"><span class="strong">Visões coordenadas:</span> filtros globais (liga, liga comparada, time, lado, brush de patches) e a seleção de campeão propagada entre rede, dispersão, barras e linha. Tudo em D3.js v7.</p></div>
+<p class="foot">Efetividade e expressividade (Munzner, 2014)</p>
+<p class="pg"></p>
+<aside>A solução segue o que a professora pediu: pelo menos três gráficos básicos e dois especiais, todos em D3. Os especiais são a rede de sinergia, porque duplas de campeões são um dado de rede e uma matriz com 167 campeões em cada eixo seria ilegível, e as coordenadas paralelas, que escolhemos no lugar do radar: o radar usa área e ângulo, canais menos precisos, e não dá para comparar dezenas de jogadores. Os básicos são dispersão, barras e linhas, que codificam taxas por posição. E tudo é coordenado: os filtros globais e a seleção de campeão atualizam todas as visões.</aside>
+</section>
