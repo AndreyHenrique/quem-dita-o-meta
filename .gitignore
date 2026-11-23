@@ -1,0 +1,9 @@
+# Dados brutos (baixados via pipeline/01_download.py)
+data/raw/
+data/processed/*.parquet
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+node_modules/
+.DS_Store
+Thumbs.db
