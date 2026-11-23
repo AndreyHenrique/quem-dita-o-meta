@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quem dita o meta?</title>
+  <meta name="description" content="O CBLOL e o cenário competitivo de League of Legends visto pelos dados (2025–2026).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="kicker">Projeto final · Visualização de Dados · UFC 2026.2</p>
+      <h1>Quem dita o meta?</h1>
+      <p class="lede">O CBLOL e o cenário competitivo de <em>League of Legends</em> visto pelos dados: as partidas profissionais de 2025 e 2026 das seis principais ligas e dos torneios internacionais.</p>
+      <div class="tiles" id="tiles"></div>
+      <p class="byline">Andrey Henrique de Abreu Carneiro · Célio Renan Pereira Costa Araújo</p>
+    </div>
+  </header>
+
+  <!-- Barra de filtros globais: tudo abaixo dela responde a estes controles -->
+  <nav class="filters" id="filters" aria-label="Filtros globais">
+    <div class="wrap filters-row">
+      <label class="field">
+        <span>Liga</span>
+        <select id="f-league"></select>
+      </label>
+      <label class="field">
+        <span>Comparar com</span>
+        <select id="f-compare"></select>
+      </label>
+      <label class="field">
+        <span>Time</span>
+        <select id="f-team"><option value="">Todos</option></select>
+      </label>
+      <div class="field">
+        <span>Lado</span>
+        <div class="seg" id="f-side" role="radiogroup" aria-label="Lado do mapa">
+          <button data-v="all" class="on" role="radio" aria-checked="true">Todos</button>
+          <button data-v="0" role="radio" aria-checked="false">Azul</button>
+          <button data-v="1" role="radio" aria-checked="false">Vermelho</button>
+        </div>
+      </div>
+      <div class="field grow">
+        <span>Patches <b id="patch-label"></b></span>
+        <div id="timeline" class="timeline"></div>
+      </div>
+      <div class="field presets">
+        <span>&nbsp;</span>
+        <div class="seg" id="f-preset">
+          <button data-v="2025">2025</button>
+          <button data-v="2026">2026</button>
+          <button data-v="all" class="on">Tudo</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ============ 1. O META ============ -->
+    <section class="chapter" id="meta">
+      <div class="wrap">
+        <p class="chapter-n">1</p>
+        <h2>O meta</h2>
+        <p class="prose">Quais campeões cada liga escolhe e bane, quais duplas aparecem juntas e se o Brasil joga o mesmo jogo que a Coreia e a China. <strong>Clique em um campeão</strong> na rede, na dispersão ou nas barras: as quatro visões se atualizam juntas.</p>
+
+        <div class="search-row">
+          <label class="field inline">
+            <span>Buscar campeão</span>
+            <input id="champ-search" list="champ-list" placeholder="ex.: Ahri, Rumble, Vi…" autocomplete="off">
+            <datalist id="champ-list"></datalist>
+          </label>
+          <button class="ghost" id="champ-clear">Limpar seleção</button>
+        </div>
+
+        <div class="grid meta-grid">
+          <figure class="card span-network">
+            <figcaption>
+              <h3>Rede de sinergia de campeões</h3>
+              <p>Cada nó é um campeão (tamanho = presença no draft, anel = taxa de vitória). Uma aresta liga dois campeões escolhidos no mesmo time (espessura = número de jogos juntos). Arraste para reorganizar.</p>
+            </figcaption>
+            <div class="chart" id="network"></div>
+            <div class="legend" id="network-legend"></div>
+          </figure>
+
+          <figure class="card">
+            <figcaption>
+              <h3>Taxa de pick × taxa de vitória</h3>
+              <p id="scatter-sub">Campeões com pelo menos 8 jogos no recorte.</p>
+            </figcaption>
+            <div class="chart" id="scatter"></div>
+          </figure>
+
+          <figure class="card">
+            <figcaption>
+              <h3 id="bars-title">Campeões mais presentes</h3>
+              <p id="bars-sub">Presença = picks + bans, em % das partidas.</p>
+            </figcaption>
+            <div class="chart" id="bars"></div>
+            <div class="legend" id="bars-legend"></div>
+          </figure>
+        </div>
+
+        <div class="grid two">
+          <figure class="card">
+            <figcaption>
+              <h3 id="presence-title">Presença no draft por patch</h3>
+              <p>% das partidas em que o campeão foi escolhido ou banido (média móvel de 3 patches). A faixa clara marca os patches selecionados. <span class="hyp">H1: o meta chega com atraso?</span></p>
+            </figcaption>
+            <div class="chart" id="presence"></div>
+            <div class="legend" id="presence-legend"></div>
+          </figure>
+          <figure class="card">
+            <figcaption>
+              <h3>Quando o CBLOL adota um campeão</h3>
+              <p>Para cada campeão que passou de 30% de presença nas duas ligas: o CBLOL chegou a esse patamar antes, no mesmo patch ou depois?</p>
+            </figcaption>
+            <div class="chart" id="adoption"></div>
+            <div class="legend" id="adoption-legend"></div>
+            <p class="finding" id="h1-finding"></p>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2. A PARTIDA ============ -->
+    <section class="chapter" id="partida">
+      <div class="wrap">
+        <p class="chapter-n">2</p>
+        <h2>A partida</h2>
+        <p class="prose">O que decide um jogo? Quem está à frente aos 15 minutos quase sempre vence? E o lado do mapa, faz diferença? Os gráficos desta seção respondem aos mesmos filtros de liga, lado e patch.</p>
+
+        <div class="grid two">
+          <figure class="card">
+            <figcaption>
+              <h3>Vitória × vantagem de ouro aos 15 min</h3>
+              <p>Pontos = taxa de vitória observada em faixas de 1.000 de ouro; curva = regressão logística. <span class="hyp">H2: viradas mais comuns no CBLOL?</span></p>
+            </figcaption>
+            <div class="chart" id="goldcurve"></div>
+            <div class="legend" id="goldcurve-legend"></div>
+          </figure>
+          <figure class="card">
+            <figcaption>
+              <h3>Taxa de viradas por liga</h3>
+              <p>% das partidas vencidas por quem estava atrás por 1.500 de ouro ou mais aos 15 min. Barras finas = intervalo de confiança de 95%.</p>
+            </figcaption>
+            <div class="chart" id="comeback"></div>
+            <p class="finding" id="h2-finding"></p>
+          </figure>
+        </div>
+
+        <div class="grid two">
+          <figure class="card">
+            <figcaption>
+              <h3>Vitórias do lado azul</h3>
+              <p>% de vitórias do time do lado azul, por liga (ponto), com intervalo de confiança de 95% (traço). A linha vertical marca 50%, que é o esperado sem vantagem de lado.</p>
+            </figcaption>
+            <div class="chart" id="blueside"></div>
+            <p class="finding" id="blue-finding"></p>
+          </figure>
+          <figure class="card">
+            <figcaption>
+              <h3>Lado azul ao longo dos patches</h3>
+              <p>Média móvel de 3 patches para as duas ligas selecionadas.</p>
+            </figcaption>
+            <div class="chart" id="bluepatch"></div>
+            <div class="legend" id="bluepatch-legend"></div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3. OS JOGADORES ============ -->
+    <section class="chapter" id="jogadores">
+      <div class="wrap">
+        <p class="chapter-n">3</p>
+        <h2>Os jogadores</h2>
+        <p class="prose">O perfil de cada jogador em percentis, comparado aos jogadores da mesma posição nas seis ligas. Escolha um jogador e <strong>arraste sobre qualquer eixo</strong> para filtrar quem aparece na lista.</p>
+
+        <div class="filters-inline">
+          <div class="field">
+            <span>Posição</span>
+            <div class="seg" id="p-pos">
+              <button data-v="0">Topo</button><button data-v="1">Selva</button><button data-v="2">Meio</button><button data-v="3" class="on">Atirador</button><button data-v="4">Suporte</button>
+            </div>
+          </div>
+          <div class="field">
+            <span>Ano</span>
+            <div class="seg" id="p-year">
+              <button data-v="2025">2025</button><button data-v="2026" class="on">2026</button>
+            </div>
+          </div>
+          <label class="field">
+            <span>Jogador</span>
+            <input id="p-search" list="p-list" placeholder="Buscar jogador…" autocomplete="off">
+            <datalist id="p-list"></datalist>
+          </label>
+          <button class="ghost" id="p-clear">Limpar filtros dos eixos</button>
+        </div>
+
+        <figure class="card wide">
+          <figcaption>
+            <h3 id="pc-title">Perfil dos atiradores: percentil em relação à mesma posição</h3>
+            <p>Cada linha é um jogador com 8 jogos ou mais no ano. Linha branca = jogador escolhido; tracejado = média da liga comparada.</p>
+          </figcaption>
+          <div class="chart" id="parcoords"></div>
+          <div class="legend" id="pc-legend"></div>
+          <p class="note">Atenção: as diferenças aos 15 minutos (Δ ouro, Δ CS) são medidas contra o adversário da <em>mesma liga</em>, então a média de cada liga fica perto de zero. Para comparar regiões, veja os confrontos internacionais ao lado.</p>
+        </figure>
+
+        <div class="grid two">
+          <figure class="card">
+            <figcaption>
+              <h3>Jogadores no filtro <span id="pc-count" class="count"></span></h3>
+              <p>Clique em uma linha para destacar o jogador. Ordenado por número de jogos.</p>
+            </figcaption>
+            <div class="table-wrap"><table id="p-table"></table></div>
+          </figure>
+          <figure class="card">
+            <figcaption>
+              <h3>Brasileiros nos internacionais: Δ ouro aos 15 min</h3>
+              <p>Diferença média de ouro aos 15 min contra o oponente direto, por posição, para jogadores de times do CBLOL em First Stand, MSI, EWC e Worlds. <span class="hyp">H3</span></p>
+            </figcaption>
+            <div class="chart" id="h3"></div>
+            <div class="legend" id="h3-legend"></div>
+            <p class="finding" id="h3-finding"></p>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4. CONCLUSÕES ============ -->
+    <section class="chapter" id="conclusoes">
+      <div class="wrap">
+        <p class="chapter-n">4</p>
+        <h2>O que os dados responderam</h2>
+        <div class="verdicts" id="verdicts"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <p><strong>Dados:</strong> <a href="https://oracleselixir.com/tools/downloads">Oracle's Elixir</a> (Tim Sevenhuysen), partidas de <span id="data-range"></span>; ícones e classes do <a href="https://developer.riotgames.com/docs/lol#data-dragon">Data Dragon</a> (Riot Games). Em 2025 o CBLOL disputou a LTA Sul (com duas equipes latino-americanas) e a LCS disputou a LTA Norte; os playoffs cruzados da LTA foram atribuídos à região de cada equipe. A LPL de 2025 tem cobertura parcial: entra nas estatísticas de draft, mas não nas de ouro aos 15 min.</p>
+    <p><strong>Ferramentas:</strong> Python (pandas, SciPy) para o tratamento; D3.js v7 para as visualizações. Código no <a href="https://github.com/">GitHub</a>. Riot Games não endossa este projeto.</p>
+  </footer>
+
+  <div class="tooltip" id="tooltip" role="status" aria-live="polite"></div>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
