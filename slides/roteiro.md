@@ -1,7 +1,7 @@
 # Roteiro do vídeo de checkpoint (≈ 5 min)
 
 Slides: https://claude.ai/artifact/SjznusmU31jHTRkyqb1ubN (fontes em `slides/deck/`).
-Site local: `python -m http.server 8765 --directory docs` → http://localhost:8765 (ou o GitHub Pages, quando ativado).
+Site: https://andreyhenrique.github.io/quem-dita-o-meta/ (local: `python -m http.server 8765 --directory docs` → http://localhost:8765).
 
 ## Como gravar
 
@@ -63,4 +63,4 @@ Algumas decisões mudaram em relação à proposta. Incluímos LCS, LCP e a Espo
 
 ### 11. Onde estamos e o que falta até 01/12
 
-Para fechar, o resumo: H1 parcialmente confirmada, o CBLOL segue a Ásia com cerca de um patch de atraso; H2 refutada, não há mais viradas no CBLOL; o lado azul tem vantagem real; e a H3 se confirma com ressalvas nos internacionais. O cronograma está em dia: dados, hipóteses e todas as visualizações coordenadas já estão prontos e no GitHub. Nesta semana fazemos a narrativa guiada, a estética, a versão para celular e testes com colegas; no dia 1º publicamos no GitHub Pages e entregamos, e no dia 2 apresentamos. Obrigado!
+Para fechar, o resumo: H1 parcialmente confirmada, o CBLOL segue a Ásia com cerca de um patch de atraso; H2 refutada, não há mais viradas no CBLOL; o lado azul tem vantagem real; e a H3 se confirma com ressalvas nos internacionais. O cronograma está em dia: dados, hipóteses e todas as visualizações coordenadas já estão prontos, e o site já está publicado no GitHub Pages. Nesta semana fazemos a narrativa guiada, a estética, a versão para celular e testes com colegas; no dia 1º entregamos, e no dia 2 apresentamos. Obrigado!

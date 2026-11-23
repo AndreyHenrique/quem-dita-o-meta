@@ -4,6 +4,8 @@
 
 Equipe: Andrey Henrique de Abreu Carneiro (555740) e Célio Renan Pereira Costa Araújo (554118).
 
+**Site:** https://andreyhenrique.github.io/quem-dita-o-meta/
+
 Site interativo em D3.js que compara o CBLOL às principais ligas (LCK, LPL, LEC, LCS, LCP) e aos torneios internacionais (First Stand, MSI, EWC, Worlds) em três perspectivas:
 
 1. **O meta**: rede de sinergia de campeões (grafo de força), dispersão pick × vitória, barras de presença/duplas e linha de presença por patch, todas coordenadas pela seleção de campeão e pelos filtros globais (liga, liga comparada, time, lado, intervalo de patches com *brush*).
